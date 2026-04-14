@@ -15,6 +15,19 @@ export interface PluginState {
   observers: MutationObserver[];
 }
 
+export const DataKey = {
+  Armed          : "__solTimerArmed",
+  Bound          : "__solTimerBound",
+  PrevDisplay    : "__solTimerPrevDisplay",
+  PrevDisplayChk : "__solTimerPrevDisplayChk",
+  ChkHidden      : "__solTimerChkHidden",
+  Hooked         : "__solTimerHooked",
+} as const;
+
+export function ds(el: HTMLElement): Record<string, string | undefined> {
+  return el.dataset as unknown as Record<string, string | undefined>;
+}
+
 export const GUARD = "__LIA_SOLUTION_TIMER_V0_0_1__";
 export const STYLE_ID = "__lia_solution_timer_css_v0_0_1__";
 export const CSS = `

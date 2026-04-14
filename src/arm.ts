@@ -1,5 +1,6 @@
 // Arming logic: reads attributes on a [data-solution-timer] element and wires up the chosen start mode.
 
+import { DataKey, ds } from "./config";
 import { parseTimeToMs, parseStartMode, parseBool, formatRemaining } from "./parse";
 import {
   findSolutionButtonSmart,
@@ -13,7 +14,7 @@ import {
 import { scheduleReveal } from "./ticker";
 
 export function tryArm(el: Element): boolean {
-  if ((el as HTMLElement).dataset.__solTimerArmed === "1") return true;
+  if (ds(el as HTMLElement)[DataKey.Armed] === "1") return true;
 
   const ms = parseTimeToMs(el.getAttribute("data-solution-timer"));
   if (ms <= 0) return false;
@@ -24,21 +25,21 @@ export function tryArm(el: Element): boolean {
   const solBtn = findSolutionButtonSmart(el);
   if (!solBtn) return false;
 
-  if ((solBtn.dataset as any).__solTimerBound === "1") {
-    (el as HTMLElement).dataset.__solTimerArmed = "1";
+  if (ds(solBtn)[DataKey.Bound] === "1") {
+    ds(el as HTMLElement)[DataKey.Armed] = "1";
     return true;
   }
-  (solBtn.dataset as any).__solTimerBound = "1";
+  ds(solBtn)[DataKey.Bound] = "1";
 
   const doc = solBtn.ownerDocument || document;
   const host = getControlHost(el, solBtn);
 
   cleanupUiInHost(host);
 
-  (solBtn.dataset as any).__solTimerPrevDisplay = solBtn.style.display || "";
+  ds(solBtn)[DataKey.PrevDisplay] = solBtn.style.display || "";
   solBtn.style.display = "none";
 
-  (el as HTMLElement).dataset.__solTimerArmed = "1";
+  ds(el as HTMLElement)[DataKey.Armed] = "1";
 
   const makeBadge = (text: string): HTMLElement => {
     const badge = doc.createElement("span");
@@ -75,8 +76,8 @@ export function tryArm(el: Element): boolean {
     };
 
     const checks = findCheckButtonsSmart(el, solBtn);
-    if (checks[0] && (checks[0].dataset as any).__solTimerHooked !== "1") {
-      (checks[0].dataset as any).__solTimerHooked = "1";
+    if (checks[0] && ds(checks[0])[DataKey.Hooked] !== "1") {
+      ds(checks[0])[DataKey.Hooked] = "1";
       checks[0].addEventListener("click", startNow, { once: true, passive: true });
     } else {
       host.addEventListener("click", (ev: Event) => {

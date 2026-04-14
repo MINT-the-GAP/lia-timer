@@ -1,6 +1,6 @@
 // Interval-based countdown ticker and deferred reveal scheduling.
 
-import { getState } from "./config";
+import { getState, DataKey, ds } from "./config";
 import { formatRemaining } from "./parse";
 
 export function ensureTicker(): void {
@@ -12,8 +12,8 @@ export function ensureTicker(): void {
       if (!it.btn || !it.btn.isConnected) { STATE.items.delete(key); continue; }
       const rem = it.endAt - now;
       if (rem <= 0) {
-        it.btn.style.display = (it.btn.dataset as any).__solTimerPrevDisplay || "";
-        delete (it.btn.dataset as any).__solTimerPrevDisplay;
+        it.btn.style.display = ds(it.btn)[DataKey.PrevDisplay] || "";
+        delete ds(it.btn)[DataKey.PrevDisplay];
         if (it.badge && it.badge.isConnected) it.badge.remove();
         STATE.items.delete(key);
       } else {

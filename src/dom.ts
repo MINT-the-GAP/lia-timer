@@ -1,5 +1,7 @@
 // DOM inspection, button discovery, host resolution, and check-button visibility.
 
+import { DataKey, ds } from "./config";
+
 export function normText(el: Element): string {
   return (
     (el as HTMLElement).textContent ||
@@ -107,9 +109,9 @@ export function cleanupUiInHost(host: Element): void {
 export function hideCheckButtons(btns: HTMLElement[]): void {
   for (const b of btns) {
     if (!b || !b.style) continue;
-    if ((b.dataset as any).__solTimerChkHidden === "1") continue;
-    (b.dataset as any).__solTimerChkHidden = "1";
-    (b.dataset as any).__solTimerPrevDisplayChk = b.style.display || "";
+    if (ds(b)[DataKey.ChkHidden] === "1") continue;
+    ds(b)[DataKey.ChkHidden] = "1";
+    ds(b)[DataKey.PrevDisplayChk] = b.style.display || "";
     b.style.display = "none";
     b.setAttribute("hidden", "");
   }
@@ -118,13 +120,13 @@ export function hideCheckButtons(btns: HTMLElement[]): void {
 export function forceShowCheckButtons(btns: HTMLElement[]): void {
   for (const b of btns) {
     if (!b || !b.style) continue;
-    b.style.display = (b.dataset as any).__solTimerPrevDisplayChk || "";
+    b.style.display = ds(b)[DataKey.PrevDisplayChk] || "";
     b.removeAttribute("hidden");
     b.removeAttribute("aria-hidden");
     b.style.visibility = "";
     b.style.pointerEvents = "";
     b.style.opacity = "";
-    delete (b.dataset as any).__solTimerChkHidden;
-    delete (b.dataset as any).__solTimerPrevDisplayChk;
+    delete ds(b)[DataKey.ChkHidden];
+    delete ds(b)[DataKey.PrevDisplayChk];
   }
 }
