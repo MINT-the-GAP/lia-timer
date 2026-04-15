@@ -30,18 +30,27 @@ export function isSolutionBtn(b: Element): boolean {
   return /(auf(lö|lo)sen|l(ö|oe)sung|solution|answer|antwort|reveal)/.test(t);
 }
 
-export function findSolutionButtonSmart(el: Element): HTMLElement | null {
-  const root = el.getRootNode ? el.getRootNode() : document;
+// Builds a deduplicated list of ancestor scopes to search: optional prepended anchor,
+// nearest lia-quiz scope, then up to 8 parent elements starting from walkFrom.
+function buildScopeList(walkFrom: Element | null, anchor: Element | null): Element[] {
   const scopes: Element[] = [];
+  if (anchor) scopes.push(anchor);
 
   const quizScope =
-    (el.matches && (el.matches("lia-quiz, .lia-quiz") ? el : null)) ||
-    (el.closest ? el.closest("lia-quiz, .lia-quiz") : null) ||
+    (walkFrom && walkFrom.matches && (walkFrom.matches("lia-quiz, .lia-quiz") ? walkFrom : null)) ||
+    (walkFrom && walkFrom.closest ? walkFrom.closest("lia-quiz, .lia-quiz") : null) ||
     null;
   if (quizScope) scopes.push(quizScope);
 
-  let p = el.parentElement, steps = 0;
+  let p = walkFrom ? walkFrom.parentElement : null, steps = 0;
   while (p && steps++ < 8) { scopes.push(p); p = p.parentElement; }
+
+  return scopes;
+}
+
+export function findSolutionButtonSmart(el: Element): HTMLElement | null {
+  const root = el.getRootNode ? el.getRootNode() : document;
+  const scopes = buildScopeList(el, null);
 
   for (const s of scopes) {
     try {
@@ -66,17 +75,8 @@ export function findSolutionButtonSmart(el: Element): HTMLElement | null {
 
 export function findCheckButtonsSmart(el: Element, solBtn: HTMLElement | null): HTMLElement[] {
   const root = el.getRootNode ? el.getRootNode() : document;
-  const scopes: Element[] = [];
-  if (solBtn && solBtn.parentElement) scopes.push(solBtn.parentElement);
-
-  const quizScope =
-    (el.matches && (el.matches("lia-quiz, .lia-quiz") ? el : null)) ||
-    (el.closest ? el.closest("lia-quiz, .lia-quiz") : null) ||
-    null;
-  if (quizScope) scopes.push(quizScope);
-
-  let p = solBtn ? solBtn.parentElement : el.parentElement, steps = 0;
-  while (p && steps++ < 8) { scopes.push(p); p = p.parentElement; }
+  const walkFrom = solBtn ?? el;
+  const scopes = buildScopeList(walkFrom, solBtn?.parentElement ?? null);
 
   for (const s of scopes) {
     try {

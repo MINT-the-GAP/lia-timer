@@ -48,14 +48,16 @@ function observeRoot(root: Node): void {
   STATE.observedRoots.add(root);
   injectStyleIntoRoot(root);
   try {
-    const mo = new MutationObserver(scanAll);
+    const mo = new MutationObserver(() => { scanAll(); });
     mo.observe(root, { childList: true, subtree: true });
     STATE.observers.push(mo);
   } catch (e) {}
 }
 
-export function scanAll(): void {
+// Returns the number of newly-armed elements found in this pass.
+export function scanAll(): number {
   const roots: Node[] = [document, ...getShadowRoots(document)];
+  let armed = 0;
   for (const r of roots) {
     observeRoot(r);
     let els: Element[] = [];
@@ -66,15 +68,25 @@ export function scanAll(): void {
         : [];
     } catch (e) {}
     for (const el of els) {
-      tryArm(el);
+      if (tryArm(el)) armed++;
     }
   }
+  return armed;
+}
+
+// Re-runs fn at each delay; stops early once the count stops growing.
+function retryUntilStable(fn: () => number, delays = [0, 150, 400, 900]): void {
+  let prev = -1;
+  const attempt = (i: number) => {
+    const count = fn();
+    if (i >= delays.length - 1 || count === prev) return;
+    prev = count;
+    setTimeout(() => attempt(i + 1), delays[i + 1]);
+  };
+  attempt(0);
 }
 
 export function init(): void {
   injectStyleIntoRoot(document);
-  scanAll();
-  setTimeout(scanAll, 0);
-  setTimeout(scanAll, 120);
-  setTimeout(scanAll, 500);
+  retryUntilStable(scanAll);
 }

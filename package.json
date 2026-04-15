@@ -2,9 +2,16 @@
   "name": "lia-timer",
   "version": "0.0.1",
   "description": "LiaScript plugin — reveal solution button after a configurable timer",
+  "main": "dist/index.js",
   "scripts": {
     "build": "parcel build src/index.ts --dist-dir dist --no-scope-hoist"
   },
+  "keywords": [
+    "liascript",
+    "plugin",
+    "timer",
+    "solution"
+  ],
   "devDependencies": {
     "parcel": "^2.13.3",
     "typescript": "^5.8.3"
