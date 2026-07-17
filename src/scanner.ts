@@ -3,6 +3,8 @@
 import { STYLE_ID, CSS, getState } from "./config";
 import { tryArm } from "./arm";
 
+const TIMER_SELECTOR = "[data-solution-timer], [data-hint-timer]";
+
 function injectStyleIntoRoot(root: Node): void {
   try {
     if (!root) return;
@@ -64,7 +66,7 @@ export function scanAll(): number {
     try {
       const rootEl = r as Document | ShadowRoot;
       els = rootEl.querySelectorAll
-        ? Array.from(rootEl.querySelectorAll("[data-solution-timer]"))
+        ? Array.from(rootEl.querySelectorAll(TIMER_SELECTOR))
         : [];
     } catch (e) {}
     for (const el of els) {

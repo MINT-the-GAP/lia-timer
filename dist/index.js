@@ -1,4 +1,21 @@
-!function(e,t,r,n,o){var l="u">typeof globalThis?globalThis:"u">typeof self?self:"u">typeof window?window:"u">typeof global?global:{},i="function"==typeof l[n]&&l[n],a=i.i||{},s=i.cache||{},u="u">typeof module&&"function"==typeof module.require&&module.require.bind(module);function c(t,r){if(!s[t]){if(!e[t]){if(o[t])return o[t];var a="function"==typeof l[n]&&l[n];if(!r&&a)return a(t,!0);if(i)return i(t,!0);if(u&&"string"==typeof t)return u(t);var d=Error("Cannot find module '"+t+"'");throw d.code="MODULE_NOT_FOUND",d}p.resolve=function(r){var n=e[t][1][r];return null!=n?n:r},p.cache={};var f=s[t]=new c.Module(t);e[t][0].call(f.exports,p,f,f.exports,l)}return s[t].exports;function p(e){var t=p.resolve(e);if(!1===t)return{};if(Array.isArray(t)){var r={__esModule:!0};return t.forEach(function(e){var t=e[0],n=e[1],o=e[2]||e[0],l=c(n);"*"===t?Object.keys(l).forEach(function(e){"default"===e||"__esModule"===e||Object.prototype.hasOwnProperty.call(r,e)||Object.defineProperty(r,e,{enumerable:!0,get:function(){return l[e]}})}):"*"===o?Object.defineProperty(r,t,{enumerable:!0,value:l}):Object.defineProperty(r,t,{enumerable:!0,get:function(){return"default"===o?l.__esModule?l.default:l:l[o]}})}),r}return c(t)}}c.isParcelRequire=!0,c.Module=function(e){this.id=e,this.bundle=c,this.require=u,this.exports={}},c.modules=e,c.cache=s,c.parent=i,c.distDir=void 0,c.publicUrl=void 0,c.devServer=void 0,c.i=a,c.register=function(t,r){e[t]=[function(e,t){t.exports=r},{}]},Object.defineProperty(c,"root",{get:function(){return l[n]}}),l[n]=c;for(var d=0;d<t.length;d++)c(t[d]);if(r){var f=c(r);"object"==typeof exports&&"u">typeof module?module.exports=f:"function"==typeof define&&define.amd&&define(function(){return f})}}({"8RSWf":[function(e,t,r,n){var o=e("./config"),l=e("./scanner");let i=window;i[o.GUARD]||(i[o.GUARD]=!0,(0,o.getState)(),(0,l.init)())},{"./config":"f398S","./scanner":"5G8ec"}],f398S:[function(e,t,r,n){var o=e("@parcel/transformer-js/src/esmodule-helpers.js");o.defineInteropFlag(r),o.export(r,"DataKey",()=>l),o.export(r,"ds",()=>i),o.export(r,"GUARD",()=>a),o.export(r,"STYLE_ID",()=>s),o.export(r,"CSS",()=>u),o.export(r,"getState",()=>c);let l={Armed:"__solTimerArmed",Bound:"__solTimerBound",PrevDisplay:"__solTimerPrevDisplay",PrevDisplayChk:"__solTimerPrevDisplayChk",ChkHidden:"__solTimerChkHidden",Hooked:"__solTimerHooked"};function i(e){return e.dataset}let a="__LIA_SOLUTION_TIMER_V0_0_1__",s="__lia_solution_timer_css_v0_0_1__",u=`
+// Entry point: guards against double-init, then kicks off the plugin.
+// Global constants, shared interfaces, and singleton state accessor.
+const $dba5cd6913742fdd$export$eeaa1397af760ecc = {
+    Armed: "__solTimerArmed",
+    ArmedSolution: "__solTimerArmedSolution",
+    ArmedHint: "__solTimerArmedHint",
+    Bound: "__solTimerBound",
+    PrevDisplay: "__solTimerPrevDisplay",
+    PrevDisplayChk: "__solTimerPrevDisplayChk",
+    ChkHidden: "__solTimerChkHidden",
+    Hooked: "__solTimerHooked"
+};
+function $dba5cd6913742fdd$export$6c6581d59e81d1b9(el) {
+    return el.dataset;
+}
+const $dba5cd6913742fdd$export$f237bebc119028c = "__LIA_SOLUTION_TIMER_V0_0_1__";
+const $dba5cd6913742fdd$export$13bec68de17cb8b1 = "__lia_solution_timer_css_v0_0_1__";
+const $dba5cd6913742fdd$export$c4ffa16951855e28 = `
 .lia-sol-timer-badge{
   display:inline-block;
   margin-left:.6rem;
@@ -10,5 +27,526 @@
   user-select:none;
 }
 .lia-sol-timer-startbtn{ margin-right:.6rem; }
-`;function c(){let e=window;return e.__liaSolTimerV001||(e.__liaSolTimerV001={items:new Map,ticker:null,observedRoots:new WeakSet,observers:[]})}},{"@parcel/transformer-js/src/esmodule-helpers.js":"k3151"}],k3151:[function(e,t,r,n){r.interopDefault=function(e){return e&&e.__esModule?e:{default:e}},r.defineInteropFlag=function(e){Object.defineProperty(e,"__esModule",{value:!0})},r.exportAll=function(e,t){return Object.keys(e).forEach(function(r){"default"===r||"__esModule"===r||Object.prototype.hasOwnProperty.call(t,r)||Object.defineProperty(t,r,{enumerable:!0,get:function(){return e[r]}})}),t},r.export=function(e,t,r){Object.defineProperty(e,t,{enumerable:!0,get:r})}},{}],"5G8ec":[function(e,t,r,n){var o=e("@parcel/transformer-js/src/esmodule-helpers.js");o.defineInteropFlag(r),o.export(r,"scanAll",()=>s),o.export(r,"init",()=>u);var l=e("./config"),i=e("./arm");function a(e){try{if(!e)return;if(9===e.nodeType){if(!e.head||e.getElementById(l.STYLE_ID))return;let t=e.createElement("style");t.id=l.STYLE_ID,t.textContent=l.CSS,e.head.appendChild(t);return}if(11===e.nodeType&&e.host){if(e.querySelector&&e.querySelector(`style[data-id="${l.STYLE_ID}"]`))return;let t=document.createElement("style");t.setAttribute("data-id",l.STYLE_ID),t.textContent=l.CSS,e.appendChild(t)}}catch(e){}}function s(){let e=[document,...function(e){let t=[];try{let r=9===e.nodeType?e.documentElement:e;if(!r)return t;let n=document.createTreeWalker(r,NodeFilter.SHOW_ELEMENT,null),o=n.currentNode;for(;o;)o.shadowRoot&&t.push(o.shadowRoot),o=n.nextNode()}catch(e){}return t}(document)],t=0;for(let r of e){!function(e){let t=(0,l.getState)();if(!(!e||t.observedRoots.has(e))){t.observedRoots.add(e),a(e);try{let r=new MutationObserver(()=>{s()});r.observe(e,{childList:!0,subtree:!0}),t.observers.push(r)}catch(e){}}}(r);let e=[];try{e=r.querySelectorAll?Array.from(r.querySelectorAll("[data-solution-timer]")):[]}catch(e){}for(let r of e)(0,i.tryArm)(r)&&t++}return t}function u(){a(document),function(e,t=[0,150,400,900]){let r=-1,n=o=>{let l=e();o>=t.length-1||l===r||(r=l,setTimeout(()=>n(o+1),t[o+1]))};n(0)}(s)}},{"./arm":"cWbXE","@parcel/transformer-js/src/esmodule-helpers.js":"k3151","./config":"f398S"}],cWbXE:[function(e,t,r,n){var o=e("@parcel/transformer-js/src/esmodule-helpers.js");o.defineInteropFlag(r),o.export(r,"tryArm",()=>c);var l=e("./config"),i=e("./parse"),a=e("./dom"),s=e("./ticker");let u={immediate:function({solBtn:e,host:t,ms:r,showBadge:n,makeBadge:o}){let l=null;n&&(l=o(`Solution in ${(0,i.formatRemaining)(r)}`),t.appendChild(l)),(0,s.scheduleReveal)(e,l,r)},oncheck:function({el:e,solBtn:t,host:r,ms:n,showBadge:o,makeBadge:u}){let c=!1,d=null;o&&(d=u("Timer starts after checking"),r.appendChild(d));let f=()=>{c||(c=!0,d&&(d.textContent=`Solution in ${(0,i.formatRemaining)(n)}`),(0,s.scheduleReveal)(t,d,n))},p=(0,a.findCheckButtonsSmart)(e,t);p[0]&&"1"!==(0,l.ds)(p[0])[l.DataKey.Hooked]?((0,l.ds)(p[0])[l.DataKey.Hooked]="1",p[0].addEventListener("click",f,{once:!0,passive:!0})):r.addEventListener("click",e=>{let t=e.target;if(!t||!t.closest)return;let r=t.closest("button, input[type='button'], a");r&&(0,a.isCheckBtn)(r)&&f()},{capture:!0,passive:!0})},onclick:function({el:e,solBtn:t,host:r,doc:n,ms:o,showBadge:l,makeBadge:u}){(0,a.hideCheckButtons)((0,a.findCheckButtonsSmart)(e,t));let c=n.createElement("button");c.type="button",c.textContent=e.getAttribute("data-solution-timer-start-label")||"Start timer",c.className="lia-btn lia-sol-timer-startbtn",c.setAttribute("data-sol-timer-ui","1"),r.insertBefore(c,r.firstChild);let d=!1;c.addEventListener("click",()=>{if(d)return;d=!0;let n=()=>(0,a.forceShowCheckButtons)((0,a.findCheckButtonsSmart)(e,t));n(),setTimeout(n,60),setTimeout(n,250),setTimeout(n,600);try{c.remove()}catch(e){c.disabled=!0}let f=null;l&&(f=u(`Solution in ${(0,i.formatRemaining)(o)}`),r.appendChild(f)),(0,s.scheduleReveal)(t,f,o)},{passive:!0})}};function c(e){if("1"===(0,l.ds)(e)[l.DataKey.Armed])return!0;let t=(0,i.parseTimeToMs)(e.getAttribute("data-solution-timer"));if(t<=0)return!1;let r=(0,i.parseStartMode)(e),n=(0,i.parseBool)(e.getAttribute("data-solution-timer-badge"),!0),o=(0,a.findSolutionButtonSmart)(e);if(!o)return!1;if("1"===(0,l.ds)(o)[l.DataKey.Bound])return(0,l.ds)(e)[l.DataKey.Armed]="1",!0;(0,l.ds)(o)[l.DataKey.Bound]="1";let s=o.ownerDocument||document,c=(0,a.getControlHost)(e,o);return(0,a.cleanupUiInHost)(c),(0,l.ds)(o)[l.DataKey.PrevDisplay]=o.style.display||"",o.style.display="none",(0,l.ds)(e)[l.DataKey.Armed]="1",u[r]({el:e,solBtn:o,host:c,doc:s,ms:t,showBadge:n,makeBadge:e=>{let t=s.createElement("span");return t.className="lia-sol-timer-badge",t.setAttribute("data-sol-timer-ui","1"),t.textContent=e,t}}),!0}},{"./parse":"drYa1","./dom":"azxXB","./ticker":"5fNz8","@parcel/transformer-js/src/esmodule-helpers.js":"k3151","./config":"f398S"}],drYa1:[function(e,t,r,n){var o=e("@parcel/transformer-js/src/esmodule-helpers.js");function l(e,t=!0){if(null==e)return t;let r=String(e).trim().toLowerCase();return r?!["0","false","off","no","n","none"].includes(r)&&(!!["1","true","on","yes","y"].includes(r)||t):t}function i(e){let t=(e.getAttribute("data-solution-timer-start")||"").trim().toLowerCase();return/^(onclick|click|manual|startbutton|start-button|start_button)$/.test(t)?"onclick":/^(oncheck|check|aftercheck|after-check|after_check)$/.test(t)?"oncheck":"immediate"}function a(e){let t;if(null==e)return 0;let r=String(e).trim().toLowerCase();if(!r)return 0;if(/^\d+(\.\d+)?$/.test(r))return Math.max(0,1e3*parseFloat(r));if(/^\d+:\d{1,2}$/.test(r)){let[e,t]=r.split(":").map(Number);return Math.max(0,(60*e+t)*1e3)}let n=0,o=!1,l=/(\d+(?:\.\d+)?)\s*(ms|s|sec|secs|second|seconds|m|min|mins|minute|minutes|h|hr|hrs|hour|hours)\b/g;for(;t=l.exec(r);){o=!0;let e=parseFloat(t[1]),r=t[2];"ms"===r?n+=e:["s","sec","secs","second","seconds"].includes(r)?n+=1e3*e:["m","min","mins","minute","minutes"].includes(r)?n+=6e4*e:["h","hr","hrs","hour","hours"].includes(r)&&(n+=36e5*e)}return o?Math.max(0,n):0}function s(e){let t=Math.ceil((e=Math.max(0,e))/1e3),r=Math.floor(t/60),n=t%60;return r<=0?`${n}s`:`${r}:${String(n).padStart(2,"0")}`}o.defineInteropFlag(r),o.export(r,"parseBool",()=>l),o.export(r,"parseStartMode",()=>i),o.export(r,"parseTimeToMs",()=>a),o.export(r,"formatRemaining",()=>s)},{"@parcel/transformer-js/src/esmodule-helpers.js":"k3151"}],azxXB:[function(e,t,r,n){var o=e("@parcel/transformer-js/src/esmodule-helpers.js");o.defineInteropFlag(r),o.export(r,"normText",()=>i),o.export(r,"isCheckBtn",()=>a),o.export(r,"isSolutionBtn",()=>s),o.export(r,"findSolutionButtonSmart",()=>c),o.export(r,"findCheckButtonsSmart",()=>d),o.export(r,"getControlHost",()=>f),o.export(r,"cleanupUiInHost",()=>p),o.export(r,"hideCheckButtons",()=>m),o.export(r,"forceShowCheckButtons",()=>h);var l=e("./config");function i(e){return(e.textContent||e.value||e.getAttribute("aria-label")||e.getAttribute("title")||"").trim().toLowerCase()}function a(e){let t=i(e);return!(!t||/(reset|zurück|zurueck|neustart)/.test(t)||/(auf(lö|lo)sen|l(ö|oe)sung|solution|answer|antwort|reveal)/.test(t))&&/(prüfen|pruefen|check)\b/.test(t)}function s(e){let t=i(e);return!(!t||/(reset|zurück|zurueck|neustart)/.test(t)||/(prüfen|pruefen|check)/.test(t))&&/(auf(lö|lo)sen|l(ö|oe)sung|solution|answer|antwort|reveal)/.test(t)}function u(e,t){let r=[];t&&r.push(t);let n=e&&e.matches&&(e.matches("lia-quiz, .lia-quiz")?e:null)||(e&&e.closest?e.closest("lia-quiz, .lia-quiz"):null)||null;n&&r.push(n);let o=e?e.parentElement:null,l=0;for(;o&&l++<8;)r.push(o),o=o.parentElement;return r}function c(e){let t=e.getRootNode?e.getRootNode():document;for(let t of u(e,null))try{let e=Array.from(t.querySelectorAll("button, input[type='button'], a")).filter(s);if(e.length)return e[e.length-1]}catch(e){}try{let e=t.querySelectorAll?Array.from(t.querySelectorAll("button, input[type='button'], a")).filter(s):[];for(let t=e.length-1;t>=0;t--){let r=e[t];if(r&&r.getClientRects&&r.getClientRects().length)return r}return e[e.length-1]||null}catch(e){}return null}function d(e,t){let r=e.getRootNode?e.getRootNode():document;for(let r of u(t??e,t?.parentElement??null))try{let e=Array.from(r.querySelectorAll("button, input[type='button'], a")).filter(a);if(e.length)return e}catch(e){}try{return(r.querySelectorAll?Array.from(r.querySelectorAll("button, input[type='button'], a")).filter(a):[]).slice(0,8)}catch(e){}return[]}function f(e,t){return t&&t.parentElement?t.parentElement:(e.closest?e.closest("lia-quiz, .lia-quiz"):null)||e.parentElement||document.body}function p(e){e&&e.querySelectorAll&&e.querySelectorAll("[data-sol-timer-ui='1']").forEach(e=>{try{e.remove()}catch(e){}})}function m(e){for(let t of e)t&&t.style&&"1"!==(0,l.ds)(t)[l.DataKey.ChkHidden]&&((0,l.ds)(t)[l.DataKey.ChkHidden]="1",(0,l.ds)(t)[l.DataKey.PrevDisplayChk]=t.style.display||"",t.style.display="none",t.setAttribute("hidden",""))}function h(e){for(let t of e)t&&t.style&&(t.style.display=(0,l.ds)(t)[l.DataKey.PrevDisplayChk]||"",t.removeAttribute("hidden"),t.removeAttribute("aria-hidden"),t.style.visibility="",t.style.pointerEvents="",t.style.opacity="",delete(0,l.ds)(t)[(0,l.DataKey).ChkHidden],delete(0,l.ds)(t)[(0,l.DataKey).PrevDisplayChk])}},{"@parcel/transformer-js/src/esmodule-helpers.js":"k3151","./config":"f398S"}],"5fNz8":[function(e,t,r,n){var o=e("@parcel/transformer-js/src/esmodule-helpers.js");o.defineInteropFlag(r),o.export(r,"ensureTicker",()=>a),o.export(r,"scheduleReveal",()=>s);var l=e("./config"),i=e("./parse");function a(){let e=(0,l.getState)();e.ticker||(e.ticker=window.setInterval(()=>{let t=Date.now();for(let[r,n]of e.items.entries()){if(!n.btn||!n.btn.isConnected){e.items.delete(r);continue}let o=n.endAt-t;o<=0?(n.btn.style.display=(0,l.ds)(n.btn)[l.DataKey.PrevDisplay]||"",delete(0,l.ds)(n.btn)[(0,l.DataKey).PrevDisplay],n.badge&&n.badge.isConnected&&n.badge.remove(),e.items.delete(r)):n.badge&&(n.badge.textContent=`Solution in ${(0,i.formatRemaining)(o)}`)}0===e.items.size&&(window.clearInterval(e.ticker),e.ticker=null)},250))}function s(e,t,r){let n=(0,l.getState)(),o=`${Date.now()}_${Math.random().toString(16).slice(2)}`;n.items.set(o,{btn:e,badge:t,endAt:Date.now()+r}),a()}},{"./config":"f398S","./parse":"drYa1","@parcel/transformer-js/src/esmodule-helpers.js":"k3151"}]},["8RSWf"],"8RSWf","parcelRequire9eeb",{});
+`;
+function $dba5cd6913742fdd$export$50fdfeece43146fd() {
+    const WIN = window;
+    return WIN.__liaSolTimerV001 || (WIN.__liaSolTimerV001 = {
+        items: new Map(),
+        ticker: null,
+        observedRoots: new WeakSet(),
+        observers: []
+    });
+}
+
+
+// Top-level scan loop: CSS injection, shadow root discovery, mutation observers, and element arming.
+
+// Arming logic: reads timer attributes and wires up the chosen start mode.
+
+// Pure parsing and formatting utilities — no DOM, no side effects.
+function $5e471daa26bff96a$export$8d1e137bafb4fdd5(raw, def = true) {
+    if (raw == null) return def;
+    const s = String(raw).trim().toLowerCase();
+    if (!s) return def;
+    if ([
+        "0",
+        "false",
+        "off",
+        "no",
+        "n",
+        "none"
+    ].includes(s)) return false;
+    if ([
+        "1",
+        "true",
+        "on",
+        "yes",
+        "y"
+    ].includes(s)) return true;
+    return def;
+}
+function $5e471daa26bff96a$export$5d0c4199026f0e1d(el) {
+    const v = (el.getAttribute("data-solution-timer-start") || "").trim().toLowerCase();
+    if (/^(onclick|click|manual|startbutton|start-button|start_button)$/.test(v)) return "onclick";
+    if (/^(oncheck|check|aftercheck|after-check|after_check)$/.test(v)) return "oncheck";
+    return "immediate";
+}
+function $5e471daa26bff96a$export$9d770012815ccd9(el, attrName) {
+    const v = (el.getAttribute(attrName) || "").trim().toLowerCase();
+    if (/^(onclick|click|manual|startbutton|start-button|start_button)$/.test(v)) return "onclick";
+    if (/^(oncheck|check|aftercheck|after-check|after_check)$/.test(v)) return "oncheck";
+    return "immediate";
+}
+function $5e471daa26bff96a$export$87a58e325bf95624(raw) {
+    if (raw == null) return 0;
+    const s0 = String(raw).trim().toLowerCase();
+    if (!s0) return 0;
+    if (/^\d+(\.\d+)?$/.test(s0)) return Math.max(0, parseFloat(s0) * 1000);
+    if (/^\d+:\d{1,2}$/.test(s0)) {
+        const [m, sec] = s0.split(":").map(Number);
+        return Math.max(0, (m * 60 + sec) * 1000);
+    }
+    let total = 0, found = false;
+    const re = /(\d+(?:\.\d+)?)\s*(ms|s|sec|secs|second|seconds|m|min|mins|minute|minutes|h|hr|hrs|hour|hours)\b/g;
+    let match;
+    while(match = re.exec(s0)){
+        found = true;
+        const n = parseFloat(match[1]);
+        const u = match[2];
+        if (u === "ms") total += n;
+        else if ([
+            "s",
+            "sec",
+            "secs",
+            "second",
+            "seconds"
+        ].includes(u)) total += n * 1000;
+        else if ([
+            "m",
+            "min",
+            "mins",
+            "minute",
+            "minutes"
+        ].includes(u)) total += n * 60000;
+        else if ([
+            "h",
+            "hr",
+            "hrs",
+            "hour",
+            "hours"
+        ].includes(u)) total += n * 3600000;
+    }
+    return found ? Math.max(0, total) : 0;
+}
+function $5e471daa26bff96a$export$7804ef7b40a0b2e(ms) {
+    ms = Math.max(0, ms);
+    const sec = Math.ceil(ms / 1000);
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return m <= 0 ? `${s}s` : `${m}:${String(s).padStart(2, "0")}`;
+}
+
+
+// DOM inspection, button discovery, host resolution, and check-button visibility.
+
+function $2f96dbadf81a4e19$export$a83e063a54f70454(el) {
+    return (el.textContent || el.value || el.getAttribute("aria-label") || el.getAttribute("title") || "").trim().toLowerCase();
+}
+function $2f96dbadf81a4e19$export$6ce148ac6aa28105(b) {
+    const t = $2f96dbadf81a4e19$export$a83e063a54f70454(b);
+    if (!t) return false;
+    if (/(reset|zurück|zurueck|neustart)/.test(t)) return false;
+    if (/(auf(lö|lo)sen|l(ö|oe)sung|solution|answer|antwort|reveal)/.test(t)) return false;
+    return /(prüfen|pruefen|check)\b/.test(t);
+}
+function $2f96dbadf81a4e19$export$f7f65fff92c3f714(b) {
+    const t = $2f96dbadf81a4e19$export$a83e063a54f70454(b);
+    if (!t) return false;
+    if (/(reset|zurück|zurueck|neustart)/.test(t)) return false;
+    if (/(prüfen|pruefen|check)/.test(t)) return false;
+    return /(auf(lö|lo)sen|l(ö|oe)sung|solution|answer|antwort|reveal)/.test(t);
+}
+function $2f96dbadf81a4e19$export$c7b32188fc98016c(b) {
+    const t = $2f96dbadf81a4e19$export$a83e063a54f70454(b);
+    if (!t) return false;
+    if (/(reset|zurück|zurueck|neustart)/.test(t)) return false;
+    if (/(prüfen|pruefen|check)/.test(t)) return false;
+    if (/(auf(lö|lo)sen|l(ö|oe)sung|solution|answer|antwort|reveal)/.test(t)) return false;
+    return /(hint|hints|hinweis|hinweise|tipp|tipps|help)/.test(t);
+}
+// Builds a deduplicated list of ancestor scopes to search: optional prepended anchor,
+// nearest lia-quiz scope, then up to 8 parent elements starting from walkFrom.
+function $2f96dbadf81a4e19$var$buildScopeList(walkFrom, anchor) {
+    const scopes = [];
+    if (anchor) scopes.push(anchor);
+    const quizScope = walkFrom && walkFrom.matches && (walkFrom.matches("lia-quiz, .lia-quiz") ? walkFrom : null) || (walkFrom && walkFrom.closest ? walkFrom.closest("lia-quiz, .lia-quiz") : null) || null;
+    if (quizScope) scopes.push(quizScope);
+    let p = walkFrom ? walkFrom.parentElement : null, steps = 0;
+    while(p && steps++ < 8){
+        scopes.push(p);
+        p = p.parentElement;
+    }
+    return scopes;
+}
+function $2f96dbadf81a4e19$export$ac26612a3a9a3d0a(el) {
+    const root = el.getRootNode ? el.getRootNode() : document;
+    const scopes = $2f96dbadf81a4e19$var$buildScopeList(el, null);
+    for (const s of scopes)try {
+        const btns = Array.from(s.querySelectorAll("button, input[type='button'], a")).filter($2f96dbadf81a4e19$export$f7f65fff92c3f714);
+        if (btns.length) return btns[btns.length - 1];
+    } catch (e) {}
+    try {
+        const rootEl = root;
+        const btns = rootEl.querySelectorAll ? Array.from(rootEl.querySelectorAll("button, input[type='button'], a")).filter($2f96dbadf81a4e19$export$f7f65fff92c3f714) : [];
+        for(let i = btns.length - 1; i >= 0; i--){
+            const b = btns[i];
+            if (b && b.getClientRects && b.getClientRects().length) return b;
+        }
+        return btns[btns.length - 1] || null;
+    } catch (e) {}
+    return null;
+}
+function $2f96dbadf81a4e19$export$1ff37ec694e634cb(el, solBtn) {
+    const root = el.getRootNode ? el.getRootNode() : document;
+    const walkFrom = solBtn ?? el;
+    const scopes = $2f96dbadf81a4e19$var$buildScopeList(walkFrom, solBtn?.parentElement ?? null);
+    for (const s of scopes)try {
+        const btns = Array.from(s.querySelectorAll("button, input[type='button'], a")).filter($2f96dbadf81a4e19$export$6ce148ac6aa28105);
+        if (btns.length) return btns;
+    } catch (e) {}
+    try {
+        const rootEl = root;
+        const all = rootEl.querySelectorAll ? Array.from(rootEl.querySelectorAll("button, input[type='button'], a")).filter($2f96dbadf81a4e19$export$6ce148ac6aa28105) : [];
+        return all.slice(0, 8);
+    } catch (e) {}
+    return [];
+}
+function $2f96dbadf81a4e19$export$d39aea4870896ca8(el) {
+    const root = el.getRootNode ? el.getRootNode() : document;
+    const scopes = $2f96dbadf81a4e19$var$buildScopeList(el, null);
+    for (const s of scopes)try {
+        const btns = Array.from(s.querySelectorAll("button, input[type='button'], a")).filter($2f96dbadf81a4e19$export$c7b32188fc98016c);
+        if (btns.length) return btns[btns.length - 1];
+    } catch (e) {}
+    try {
+        const rootEl = root;
+        const btns = rootEl.querySelectorAll ? Array.from(rootEl.querySelectorAll("button, input[type='button'], a")).filter($2f96dbadf81a4e19$export$c7b32188fc98016c) : [];
+        for(let i = btns.length - 1; i >= 0; i--){
+            const b = btns[i];
+            if (b && b.getClientRects && b.getClientRects().length) return b;
+        }
+        return btns[btns.length - 1] || null;
+    } catch (e) {}
+    return null;
+}
+function $2f96dbadf81a4e19$export$d677d1715dffa34a(el, solBtn) {
+    if (solBtn && solBtn.parentElement) return solBtn.parentElement;
+    const quizScope = (el.closest ? el.closest("lia-quiz, .lia-quiz") : null) || null;
+    return quizScope || el.parentElement || document.body;
+}
+function $2f96dbadf81a4e19$export$2184e5bae6ce039b(host, uiScope) {
+    if (!host || !host.querySelectorAll) return;
+    const sel = uiScope ? `[data-sol-timer-ui='${uiScope}']` : "[data-sol-timer-ui]";
+    host.querySelectorAll(sel).forEach((n)=>{
+        try {
+            n.remove();
+        } catch (e) {}
+    });
+}
+function $2f96dbadf81a4e19$export$94ddb935abe0ba38(btns) {
+    for (const b of btns){
+        if (!b || !b.style) continue;
+        if ((0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(b)[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).ChkHidden] === "1") continue;
+        (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(b)[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).ChkHidden] = "1";
+        (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(b)[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).PrevDisplayChk] = b.style.display || "";
+        b.style.display = "none";
+        b.setAttribute("hidden", "");
+    }
+}
+function $2f96dbadf81a4e19$export$bdc20daf8ea1bef2(btns) {
+    for (const b of btns){
+        if (!b || !b.style) continue;
+        b.style.display = (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(b)[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).PrevDisplayChk] || "";
+        b.removeAttribute("hidden");
+        b.removeAttribute("aria-hidden");
+        b.style.visibility = "";
+        b.style.pointerEvents = "";
+        b.style.opacity = "";
+        delete (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(b)[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).ChkHidden];
+        delete (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(b)[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).PrevDisplayChk];
+    }
+}
+
+
+// Interval-based countdown ticker and deferred reveal scheduling.
+
+
+function $24903ece0cd2ba58$export$d5ce91302947a611() {
+    const STATE = (0, $dba5cd6913742fdd$export$50fdfeece43146fd)();
+    if (STATE.ticker) return;
+    STATE.ticker = window.setInterval(()=>{
+        const now = Date.now();
+        for (const [key, it] of STATE.items.entries()){
+            if (!it.btn || !it.btn.isConnected) {
+                STATE.items.delete(key);
+                continue;
+            }
+            const rem = it.endAt - now;
+            if (rem <= 0) {
+                it.btn.style.display = (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(it.btn)[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).PrevDisplay] || "";
+                delete (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(it.btn)[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).PrevDisplay];
+                if (it.badge && it.badge.isConnected) it.badge.remove();
+                STATE.items.delete(key);
+            } else if (it.badge) it.badge.textContent = `${it.label} in ${(0, $5e471daa26bff96a$export$7804ef7b40a0b2e)(rem)}`;
+        }
+        if (STATE.items.size === 0) {
+            window.clearInterval(STATE.ticker);
+            STATE.ticker = null;
+        }
+    }, 250);
+}
+function $24903ece0cd2ba58$export$cd7f9ccaf0cd3a43(btn, badge, ms, label) {
+    const STATE = (0, $dba5cd6913742fdd$export$50fdfeece43146fd)();
+    const key = `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+    STATE.items.set(key, {
+        btn: btn,
+        badge: badge,
+        endAt: Date.now() + ms,
+        label: label
+    });
+    $24903ece0cd2ba58$export$d5ce91302947a611();
+}
+
+
+function $5cd4c2fb7948d554$var$armImmediate({ timerBtn: timerBtn, host: host, ms: ms, showBadge: showBadge, makeBadge: makeBadge, label: label }) {
+    let badge = null;
+    if (showBadge) {
+        badge = makeBadge(`${label} in ${(0, $5e471daa26bff96a$export$7804ef7b40a0b2e)(ms)}`);
+        host.appendChild(badge);
+    }
+    (0, $24903ece0cd2ba58$export$cd7f9ccaf0cd3a43)(timerBtn, badge, ms, label);
+}
+function $5cd4c2fb7948d554$var$armOnCheck({ el: el, timerBtn: timerBtn, host: host, ms: ms, showBadge: showBadge, makeBadge: makeBadge, label: label }) {
+    let started = false;
+    let badge = null;
+    if (showBadge) {
+        badge = makeBadge(`${label} timer starts after checking`);
+        host.appendChild(badge);
+    }
+    const startNow = ()=>{
+        if (started) return;
+        started = true;
+        if (badge) badge.textContent = `${label} in ${(0, $5e471daa26bff96a$export$7804ef7b40a0b2e)(ms)}`;
+        (0, $24903ece0cd2ba58$export$cd7f9ccaf0cd3a43)(timerBtn, badge, ms, label);
+    };
+    const checks = (0, $2f96dbadf81a4e19$export$1ff37ec694e634cb)(el, timerBtn);
+    if (checks[0] && (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(checks[0])[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).Hooked] !== "1") {
+        (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(checks[0])[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).Hooked] = "1";
+        checks[0].addEventListener("click", startNow, {
+            once: true,
+            passive: true
+        });
+    } else host.addEventListener("click", (ev)=>{
+        const t = ev.target;
+        if (!t || !t.closest) return;
+        const b = t.closest("button, input[type='button'], a");
+        if (b && (0, $2f96dbadf81a4e19$export$6ce148ac6aa28105)(b)) startNow();
+    }, {
+        capture: true,
+        passive: true
+    });
+}
+function $5cd4c2fb7948d554$var$armOnClick({ el: el, timerBtn: timerBtn, host: host, doc: doc, ms: ms, showBadge: showBadge, makeBadge: makeBadge, startLabel: startLabel, label: label, hideChecksUntilStart: hideChecksUntilStart, uiScope: uiScope }) {
+    if (hideChecksUntilStart) (0, $2f96dbadf81a4e19$export$94ddb935abe0ba38)((0, $2f96dbadf81a4e19$export$1ff37ec694e634cb)(el, timerBtn));
+    const startBtn = doc.createElement("button");
+    startBtn.type = "button";
+    startBtn.textContent = startLabel;
+    startBtn.className = "lia-btn lia-sol-timer-startbtn";
+    startBtn.setAttribute("data-sol-timer-ui", uiScope);
+    host.insertBefore(startBtn, host.firstChild);
+    let started = false;
+    startBtn.addEventListener("click", ()=>{
+        if (started) return;
+        started = true;
+        if (hideChecksUntilStart) {
+            const force = ()=>(0, $2f96dbadf81a4e19$export$bdc20daf8ea1bef2)((0, $2f96dbadf81a4e19$export$1ff37ec694e634cb)(el, timerBtn));
+            force();
+            setTimeout(force, 60);
+            setTimeout(force, 250);
+            setTimeout(force, 600);
+        }
+        try {
+            startBtn.remove();
+        } catch (e) {
+            startBtn.disabled = true;
+        }
+        let badge = null;
+        if (showBadge) {
+            badge = makeBadge(`${label} in ${(0, $5e471daa26bff96a$export$7804ef7b40a0b2e)(ms)}`);
+            host.appendChild(badge);
+        }
+        (0, $24903ece0cd2ba58$export$cd7f9ccaf0cd3a43)(timerBtn, badge, ms, label);
+    }, {
+        passive: true
+    });
+}
+const $5cd4c2fb7948d554$var$STRATEGIES = {
+    immediate: $5cd4c2fb7948d554$var$armImmediate,
+    oncheck: $5cd4c2fb7948d554$var$armOnCheck,
+    onclick: $5cd4c2fb7948d554$var$armOnClick
+};
+const $5cd4c2fb7948d554$var$SOLUTION_CFG = {
+    timerAttr: "data-solution-timer",
+    startAttr: "data-solution-timer-start",
+    badgeAttr: "data-solution-timer-badge",
+    startLabelAttr: "data-solution-timer-start-label",
+    armedKey: (0, $dba5cd6913742fdd$export$eeaa1397af760ecc).ArmedSolution,
+    label: "Solution",
+    uiScope: "solution",
+    hideChecksUntilStart: true,
+    findButton: (0, $2f96dbadf81a4e19$export$ac26612a3a9a3d0a)
+};
+const $5cd4c2fb7948d554$var$HINT_CFG = {
+    timerAttr: "data-hint-timer",
+    startAttr: "data-hint-timer-start",
+    badgeAttr: "data-hint-badge",
+    startLabelAttr: "data-hint-timer-start-label",
+    armedKey: (0, $dba5cd6913742fdd$export$eeaa1397af760ecc).ArmedHint,
+    label: "Hint",
+    uiScope: "hint",
+    hideChecksUntilStart: false,
+    findButton: (0, $2f96dbadf81a4e19$export$d39aea4870896ca8)
+};
+function $5cd4c2fb7948d554$var$tryArmTarget(el, cfg) {
+    if ((0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(el)[cfg.armedKey] === "1") return true;
+    const ms = (0, $5e471daa26bff96a$export$87a58e325bf95624)(el.getAttribute(cfg.timerAttr));
+    if (ms <= 0) return false;
+    const startMode = (0, $5e471daa26bff96a$export$9d770012815ccd9)(el, cfg.startAttr);
+    const showBadge = (0, $5e471daa26bff96a$export$8d1e137bafb4fdd5)(el.getAttribute(cfg.badgeAttr), true);
+    const startLabel = el.getAttribute(cfg.startLabelAttr) || "Start timer";
+    const timerBtn = cfg.findButton(el);
+    if (!timerBtn) return false;
+    if ((0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(timerBtn)[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).Bound] === "1") {
+        (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(el)[cfg.armedKey] = "1";
+        (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(el)[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).Armed] = "1";
+        return true;
+    }
+    (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(timerBtn)[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).Bound] = "1";
+    const doc = timerBtn.ownerDocument || document;
+    const host = (0, $2f96dbadf81a4e19$export$d677d1715dffa34a)(el, timerBtn);
+    (0, $2f96dbadf81a4e19$export$2184e5bae6ce039b)(host, cfg.uiScope);
+    (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(timerBtn)[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).PrevDisplay] = timerBtn.style.display || "";
+    timerBtn.style.display = "none";
+    (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(el)[cfg.armedKey] = "1";
+    (0, $dba5cd6913742fdd$export$6c6581d59e81d1b9)(el)[(0, $dba5cd6913742fdd$export$eeaa1397af760ecc).Armed] = "1";
+    const makeBadge = (text)=>{
+        const badge = doc.createElement("span");
+        badge.className = "lia-sol-timer-badge";
+        badge.setAttribute("data-sol-timer-ui", cfg.uiScope);
+        badge.textContent = text;
+        return badge;
+    };
+    $5cd4c2fb7948d554$var$STRATEGIES[startMode]({
+        el: el,
+        timerBtn: timerBtn,
+        host: host,
+        doc: doc,
+        ms: ms,
+        showBadge: showBadge,
+        label: cfg.label,
+        startLabel: startLabel,
+        hideChecksUntilStart: cfg.hideChecksUntilStart,
+        uiScope: cfg.uiScope,
+        makeBadge: makeBadge
+    });
+    return true;
+}
+function $5cd4c2fb7948d554$export$9ea6af4cf3708cf7(el) {
+    const armedSolution = $5cd4c2fb7948d554$var$tryArmTarget(el, $5cd4c2fb7948d554$var$SOLUTION_CFG);
+    const armedHint = $5cd4c2fb7948d554$var$tryArmTarget(el, $5cd4c2fb7948d554$var$HINT_CFG);
+    return armedSolution || armedHint;
+}
+
+
+const $42ee8f97cb5987f8$var$TIMER_SELECTOR = "[data-solution-timer], [data-hint-timer]";
+function $42ee8f97cb5987f8$var$injectStyleIntoRoot(root) {
+    try {
+        if (!root) return;
+        if (root.nodeType === 9) {
+            const doc = root;
+            if (!doc.head) return;
+            if (doc.getElementById((0, $dba5cd6913742fdd$export$13bec68de17cb8b1))) return;
+            const st = doc.createElement("style");
+            st.id = (0, $dba5cd6913742fdd$export$13bec68de17cb8b1);
+            st.textContent = (0, $dba5cd6913742fdd$export$c4ffa16951855e28);
+            doc.head.appendChild(st);
+            return;
+        }
+        if (root.nodeType === 11 && root.host) {
+            const sr = root;
+            if (sr.querySelector && sr.querySelector(`style[data-id="${(0, $dba5cd6913742fdd$export$13bec68de17cb8b1)}"]`)) return;
+            const st = document.createElement("style");
+            st.setAttribute("data-id", (0, $dba5cd6913742fdd$export$13bec68de17cb8b1));
+            st.textContent = (0, $dba5cd6913742fdd$export$c4ffa16951855e28);
+            sr.appendChild(st);
+        }
+    } catch (e) {}
+}
+function $42ee8f97cb5987f8$var$getShadowRoots(root) {
+    const roots = [];
+    try {
+        const start = root.nodeType === 9 ? root.documentElement : root;
+        if (!start) return roots;
+        const walker = document.createTreeWalker(start, NodeFilter.SHOW_ELEMENT, null);
+        let node = walker.currentNode;
+        while(node){
+            if (node.shadowRoot) roots.push(node.shadowRoot);
+            node = walker.nextNode();
+        }
+    } catch (e) {}
+    return roots;
+}
+function $42ee8f97cb5987f8$var$observeRoot(root) {
+    const STATE = (0, $dba5cd6913742fdd$export$50fdfeece43146fd)();
+    if (!root || STATE.observedRoots.has(root)) return;
+    STATE.observedRoots.add(root);
+    $42ee8f97cb5987f8$var$injectStyleIntoRoot(root);
+    try {
+        const mo = new MutationObserver(()=>{
+            $42ee8f97cb5987f8$export$5e337cddb229c47e();
+        });
+        mo.observe(root, {
+            childList: true,
+            subtree: true
+        });
+        STATE.observers.push(mo);
+    } catch (e) {}
+}
+function $42ee8f97cb5987f8$export$5e337cddb229c47e() {
+    const roots = [
+        document,
+        ...$42ee8f97cb5987f8$var$getShadowRoots(document)
+    ];
+    let armed = 0;
+    for (const r of roots){
+        $42ee8f97cb5987f8$var$observeRoot(r);
+        let els = [];
+        try {
+            const rootEl = r;
+            els = rootEl.querySelectorAll ? Array.from(rootEl.querySelectorAll($42ee8f97cb5987f8$var$TIMER_SELECTOR)) : [];
+        } catch (e) {}
+        for (const el of els)if ((0, $5cd4c2fb7948d554$export$9ea6af4cf3708cf7)(el)) armed++;
+    }
+    return armed;
+}
+// Re-runs fn at each delay; stops early once the count stops growing.
+function $42ee8f97cb5987f8$var$retryUntilStable(fn, delays = [
+    0,
+    150,
+    400,
+    900
+]) {
+    let prev = -1;
+    const attempt = (i)=>{
+        const count = fn();
+        if (i >= delays.length - 1 || count === prev) return;
+        prev = count;
+        setTimeout(()=>attempt(i + 1), delays[i + 1]);
+    };
+    attempt(0);
+}
+function $42ee8f97cb5987f8$export$2cd8252107eb640b() {
+    $42ee8f97cb5987f8$var$injectStyleIntoRoot(document);
+    $42ee8f97cb5987f8$var$retryUntilStable($42ee8f97cb5987f8$export$5e337cddb229c47e);
+}
+
+
+const $882b6d93070905b3$var$WIN = window;
+if (!$882b6d93070905b3$var$WIN[0, $dba5cd6913742fdd$export$f237bebc119028c]) {
+    $882b6d93070905b3$var$WIN[0, $dba5cd6913742fdd$export$f237bebc119028c] = true;
+    (0, $dba5cd6913742fdd$export$50fdfeece43146fd)(); // ensure state singleton is initialised
+    (0, $42ee8f97cb5987f8$export$2cd8252107eb640b)();
+}
+
+
 //# sourceMappingURL=index.js.map

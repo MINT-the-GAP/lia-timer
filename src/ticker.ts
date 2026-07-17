@@ -1,6 +1,7 @@
 // Interval-based countdown ticker and deferred reveal scheduling.
 
 import { getState, DataKey, ds } from "./config";
+import type { TimerLabel } from "./config";
 import { formatRemaining } from "./parse";
 
 export function ensureTicker(): void {
@@ -17,7 +18,7 @@ export function ensureTicker(): void {
         if (it.badge && it.badge.isConnected) it.badge.remove();
         STATE.items.delete(key);
       } else {
-        if (it.badge) it.badge.textContent = `Solution in ${formatRemaining(rem)}`;
+        if (it.badge) it.badge.textContent = `${it.label} in ${formatRemaining(rem)}`;
       }
     }
     if (STATE.items.size === 0) {
@@ -27,9 +28,9 @@ export function ensureTicker(): void {
   }, 250);
 }
 
-export function scheduleReveal(btn: HTMLElement, badge: HTMLElement | null, ms: number): void {
+export function scheduleReveal(btn: HTMLElement, badge: HTMLElement | null, ms: number, label: TimerLabel): void {
   const STATE = getState();
   const key = `${Date.now()}_${Math.random().toString(16).slice(2)}`;
-  STATE.items.set(key, { btn, badge, endAt: Date.now() + ms });
+  STATE.items.set(key, { btn, badge, endAt: Date.now() + ms, label });
   ensureTicker();
 }

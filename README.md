@@ -1,18 +1,18 @@
 <!--
-author:   Martin Lommatzsch
+author:   Martin Lommatzsch, Jihad Hyadi
 version:  0.0.1
 language: en
 narrator: US English Female
-comment:  Reveal the solution button after a configurable countdown timer. Supports immediate, on-check, and manual-start modes.
+comment:  Reveal solution and hint buttons after configurable countdown timers. Supports immediate, on-check, and manual-start modes.
 
 script:   ./dist/index.js
 
 -->
 
-# LiaScript Solution Timer
+# LiaScript Quiz Timer (Solution + Hint)
 
           --{{0}}--
-This plugin hides the solution button in LiaScript quizzes and reveals it only after a configurable countdown. Three trigger modes are supported: immediate countdown, start after first check, or manual start via a button.
+This plugin hides solution and hint buttons in LiaScript quizzes and reveals them only after a configurable countdown. Three trigger modes are supported: immediate countdown, start after first check, or manual start via a button.
 
 __Try it on LiaScript:__
 https://liascript.github.io/course/?https://raw.githubusercontent.com/MINT-the-GAP/lia-timer/main/README.md
@@ -29,14 +29,14 @@ https://github.com/MINT-the-GAP/lia-timer
 
    `import: https://raw.githubusercontent.com/MINT-the-GAP/lia-timer/0.0.1/README.md`
 
-2. Add `data-solution-timer` attributes to your quiz comment blocks (see examples below)
+2. Add `data-solution-timer` and/or `data-hint-timer` attributes to your quiz comment blocks (see examples below)
 
 3. Clone this repository on GitHub
 
 ## Usage
 
           --{{0}}--
-Add `data-solution-timer` to the HTML comment block above a quiz question. The value is the delay before the solution button appears. Optional attributes control the trigger mode and badge visibility.
+Add timer attributes to the HTML comment block above a quiz question. The value is the delay before the corresponding button appears. Optional attributes control trigger mode and badge visibility.
 
 ### Attributes
 
@@ -46,6 +46,10 @@ Add `data-solution-timer` to the HTML comment block above a quiz question. The v
 | `data-solution-timer-start` | `immediate` / `oncheck` / `onclick` | `immediate` | When the countdown starts. |
 | `data-solution-timer-badge` | `on` / `off` | `on` | Show/hide the countdown badge. |
 | `data-solution-timer-start-label` | any string | `Start timer` | Button label for `onclick` mode. |
+| `data-hint-timer` | `10s`, `2min`, `1:30`, `90` | — | **Required for hint timer.** Countdown duration for the hint button. |
+| `data-hint-timer-start` | `immediate` / `oncheck` / `onclick` | `immediate` | When the hint countdown starts. |
+| `data-hint-badge` | `on` / `off` | `on` | Show/hide the hint countdown badge. |
+| `data-hint-timer-start-label` | any string | `Start timer` | Button label for hint `onclick` mode. |
 
 ### Immediate countdown
 
@@ -80,13 +84,17 @@ The countdown only starts after the learner clicks the check button for the firs
 ### Silent oncheck (no badge)
 
 ``` markdown
-<!-- data-solution-timer="10s" data-solution-timer-start="oncheck" data-solution-timer-badge="off" -->
+<!-- data-solution-timer="10s" 
+data-solution-timer-start="oncheck" 
+data-solution-timer-badge="off" -->
 9 + 6 = [[ 15 ]]
 ```
 
 ---
 
-<!-- data-solution-timer="10s" data-solution-timer-start="oncheck" data-solution-timer-badge="off" -->
+<!-- data-solution-timer="10s" 
+data-solution-timer-start="oncheck" 
+data-solution-timer-badge="off" -->
 9 + 6 = [[ 15 ]]
 
 ### Manual start button (`onclick`)
@@ -107,9 +115,44 @@ The check button is hidden until the learner clicks the start button. This preve
 ### Manual start without badge
 
 ``` markdown
-<!-- data-solution-timer="10s" data-solution-timer-start="onclick" data-solution-timer-badge="off" -->
+<!-- data-solution-timer="10s" 
+data-solution-timer-start="onclick" 
+data-solution-timer-badge="off" -->
 5 + 5 = [[ 10 ]]
 ```
+
+### Hint timer (immediate)
+
+``` markdown
+<!-- data-hint-timer="20s" -->
+9 + 6 = [[ 15 ]]
+[[?]] 9 + 6 = 10 + 5
+```
+
+---
+
+<!-- data-hint-timer="20s" -->
+9 + 6 = [[ 15 ]]
+[[?]] 9 + 6 = 10 + 5
+
+### Hint timer (oncheck, no badge)
+
+``` markdown
+<!-- data-hint-timer="20s" 
+data-hint-timer-start="oncheck" 
+data-hint-badge="off" -->
+8 + 7 = [[ 15 ]]
+[[?]] Think of 7 + 7 + 1
+```
+
+---
+
+<!-- data-hint-timer="20s" 
+data-hint-timer-start="oncheck" 
+data-hint-badge="off" -->
+8 + 7 = [[ 15 ]]
+[[?]] Think of 7 + 7 + 1
+
 
 ---
 

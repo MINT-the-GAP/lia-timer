@@ -30,6 +30,15 @@ export function isSolutionBtn(b: Element): boolean {
   return /(auf(lö|lo)sen|l(ö|oe)sung|solution|answer|antwort|reveal)/.test(t);
 }
 
+export function isHintBtn(b: Element): boolean {
+  const t = normText(b);
+  if (!t) return false;
+  if (/(reset|zurück|zurueck|neustart)/.test(t)) return false;
+  if (/(prüfen|pruefen|check)/.test(t)) return false;
+  if (/(auf(lö|lo)sen|l(ö|oe)sung|solution|answer|antwort|reveal)/.test(t)) return false;
+  return /(hint|hints|hinweis|hinweise|tipp|tipps|help)/.test(t);
+}
+
 // Builds a deduplicated list of ancestor scopes to search: optional prepended anchor,
 // nearest lia-quiz scope, then up to 8 parent elements starting from walkFrom.
 function buildScopeList(walkFrom: Element | null, anchor: Element | null): Element[] {
@@ -95,15 +104,43 @@ export function findCheckButtonsSmart(el: Element, solBtn: HTMLElement | null): 
   return [];
 }
 
+export function findHintButtonSmart(el: Element): HTMLElement | null {
+  const root = el.getRootNode ? el.getRootNode() : document;
+  const scopes = buildScopeList(el, null);
+
+  for (const s of scopes) {
+    try {
+      const btns = Array.from(s.querySelectorAll("button, input[type='button'], a")).filter(isHintBtn);
+      if (btns.length) return btns[btns.length - 1] as HTMLElement;
+    } catch (e) {}
+  }
+
+  try {
+    const rootEl = root as Document | ShadowRoot;
+    const btns = rootEl.querySelectorAll
+      ? Array.from(rootEl.querySelectorAll("button, input[type='button'], a")).filter(isHintBtn)
+      : [];
+    for (let i = btns.length - 1; i >= 0; i--) {
+      const b = btns[i] as HTMLElement;
+      if (b && b.getClientRects && b.getClientRects().length) return b;
+    }
+    return (btns[btns.length - 1] as HTMLElement) || null;
+  } catch (e) {}
+  return null;
+}
+
 export function getControlHost(el: Element, solBtn: HTMLElement | null): Element {
   if (solBtn && solBtn.parentElement) return solBtn.parentElement;
   const quizScope = (el.closest ? el.closest("lia-quiz, .lia-quiz") : null) || null;
   return quizScope || el.parentElement || document.body;
 }
 
-export function cleanupUiInHost(host: Element): void {
+export function cleanupUiInHost(host: Element, uiScope?: string): void {
   if (!host || !host.querySelectorAll) return;
-  host.querySelectorAll("[data-sol-timer-ui='1']").forEach(n => { try { n.remove(); } catch (e) {} });
+  const sel = uiScope
+    ? `[data-sol-timer-ui='${uiScope}']`
+    : "[data-sol-timer-ui]";
+  host.querySelectorAll(sel).forEach(n => { try { n.remove(); } catch (e) {} });
 }
 
 export function hideCheckButtons(btns: HTMLElement[]): void {

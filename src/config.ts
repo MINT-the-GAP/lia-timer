@@ -1,11 +1,13 @@
 // Global constants, shared interfaces, and singleton state accessor.
 
 export type StartMode = "immediate" | "onclick" | "oncheck";
+export type TimerLabel = "Solution" | "Hint";
 
 export interface TimerItem {
   btn: HTMLElement;
   badge: HTMLElement | null;
   endAt: number;
+  label: TimerLabel;
 }
 
 export interface PluginState {
@@ -17,6 +19,8 @@ export interface PluginState {
 
 export const DataKey = {
   Armed          : "__solTimerArmed",
+  ArmedSolution  : "__solTimerArmedSolution",
+  ArmedHint      : "__solTimerArmedHint",
   Bound          : "__solTimerBound",
   PrevDisplay    : "__solTimerPrevDisplay",
   PrevDisplayChk : "__solTimerPrevDisplayChk",

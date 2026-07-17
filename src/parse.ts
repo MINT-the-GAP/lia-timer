@@ -18,6 +18,13 @@ export function parseStartMode(el: Element): StartMode {
   return "immediate";
 }
 
+export function parseStartModeFromAttr(el: Element, attrName: string): StartMode {
+  const v = (el.getAttribute(attrName) || "").trim().toLowerCase();
+  if (/^(onclick|click|manual|startbutton|start-button|start_button)$/.test(v)) return "onclick";
+  if (/^(oncheck|check|aftercheck|after-check|after_check)$/.test(v)) return "oncheck";
+  return "immediate";
+}
+
 export function parseTimeToMs(raw: string | null): number {
   if (raw == null) return 0;
   const s0 = String(raw).trim().toLowerCase();
