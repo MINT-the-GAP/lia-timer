@@ -1,11 +1,11 @@
 // Entry point: guards against double-init, then kicks off the plugin.
 
-import { GUARD, getState } from "./config";
+import { pluginWindow, getState } from "./config";
 import { init } from "./scanner";
 
-const WIN = window as any;
-if (!WIN[GUARD]) {
-  WIN[GUARD] = true;
+const WIN = pluginWindow();
+if (!WIN.__LIA_SOLUTION_TIMER_V0_0_1__) {
+  WIN.__LIA_SOLUTION_TIMER_V0_0_1__ = true;
   getState(); // ensure state singleton is initialised
   init();
 }

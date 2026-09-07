@@ -1,6 +1,6 @@
 <!--
 author:   Martin Lommatzsch, Jihad Hyadi
-version:  0.0.1
+version:  0.0.2
 language: en
 narrator: US English Female
 comment:  Reveal solution and hint buttons after configurable countdown timers. Supports immediate, on-check, and manual-start modes.

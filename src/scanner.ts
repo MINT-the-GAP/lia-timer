@@ -26,7 +26,7 @@ function injectStyleIntoRoot(root: Node): void {
       st.textContent = CSS;
       sr.appendChild(st);
     }
-  } catch (e) {}
+  } catch (e) {} // closed/cross-origin root: styling it is optional
 }
 
 function getShadowRoots(root: Node): ShadowRoot[] {
@@ -40,8 +40,31 @@ function getShadowRoots(root: Node): ShadowRoot[] {
       if ((node as Element).shadowRoot) roots.push((node as Element).shadowRoot!);
       node = walker.nextNode();
     }
-  } catch (e) {}
+  } catch (e) {} // walk failed: fall back to whatever roots we already collected
   return roots;
+}
+
+// scanAll() mutates the DOM, which re-fires the observers that called it.
+// Coalesce into one rescan per frame so a burst of mutations costs one pass.
+function requestRescan(): void {
+  const STATE = getState();
+  if (STATE.rescan !== null) return;
+  STATE.rescan = window.setTimeout(() => {
+    STATE.rescan = null;
+    scanAll();
+  }, 0);
+}
+
+// Drops observers whose root is gone, so they don't accumulate across a session.
+function pruneObservers(): void {
+  const STATE = getState();
+  STATE.observers = STATE.observers.filter(({ root, mo }) => {
+    const alive =
+      root.nodeType === 9 ||
+      (root.nodeType === 11 ? (root as ShadowRoot).host?.isConnected : (root as Element).isConnected);
+    if (!alive) mo.disconnect();
+    return alive;
+  });
 }
 
 function observeRoot(root: Node): void {
@@ -50,14 +73,15 @@ function observeRoot(root: Node): void {
   STATE.observedRoots.add(root);
   injectStyleIntoRoot(root);
   try {
-    const mo = new MutationObserver(() => { scanAll(); });
+    const mo = new MutationObserver(() => { requestRescan(); });
     mo.observe(root, { childList: true, subtree: true });
-    STATE.observers.push(mo);
-  } catch (e) {}
+    STATE.observers.push({ root, mo });
+  } catch (e) {} // unobservable root: retryUntilStable still covers it
 }
 
 // Returns the number of newly-armed elements found in this pass.
 export function scanAll(): number {
+  pruneObservers();
   const roots: Node[] = [document, ...getShadowRoots(document)];
   let armed = 0;
   for (const r of roots) {
@@ -68,7 +92,7 @@ export function scanAll(): number {
       els = rootEl.querySelectorAll
         ? Array.from(rootEl.querySelectorAll(TIMER_SELECTOR))
         : [];
-    } catch (e) {}
+    } catch (e) {} // unqueryable root: skip it this pass
     for (const el of els) {
       if (tryArm(el)) armed++;
     }

@@ -2,6 +2,8 @@
 
 import { DataKey, ds } from "./config";
 
+const BTN_SELECTOR = "button, input[type='button'], a";
+
 export function normText(el: Element): string {
   return (
     (el as HTMLElement).textContent ||
@@ -57,29 +59,34 @@ function buildScopeList(walkFrom: Element | null, anchor: Element | null): Eleme
   return scopes;
 }
 
-export function findSolutionButtonSmart(el: Element): HTMLElement | null {
+// Nearest matching button by scope, else the last visible one anywhere in the root.
+function findButtonSmart(el: Element, match: (b: Element) => boolean): HTMLElement | null {
   const root = el.getRootNode ? el.getRootNode() : document;
   const scopes = buildScopeList(el, null);
 
   for (const s of scopes) {
     try {
-      const btns = Array.from(s.querySelectorAll("button, input[type='button'], a")).filter(isSolutionBtn);
+      const btns = Array.from(s.querySelectorAll(BTN_SELECTOR)).filter(match);
       if (btns.length) return btns[btns.length - 1] as HTMLElement;
-    } catch (e) {}
+    } catch (e) {} // scope may be detached; try the next one
   }
 
   try {
     const rootEl = root as Document | ShadowRoot;
     const btns = rootEl.querySelectorAll
-      ? Array.from(rootEl.querySelectorAll("button, input[type='button'], a")).filter(isSolutionBtn)
+      ? Array.from(rootEl.querySelectorAll(BTN_SELECTOR)).filter(match)
       : [];
     for (let i = btns.length - 1; i >= 0; i--) {
       const b = btns[i] as HTMLElement;
       if (b && b.getClientRects && b.getClientRects().length) return b;
     }
     return (btns[btns.length - 1] as HTMLElement) || null;
-  } catch (e) {}
+  } catch (e) {} // root may be inaccessible; caller treats null as "not found yet"
   return null;
+}
+
+export function findSolutionButtonSmart(el: Element): HTMLElement | null {
+  return findButtonSmart(el, isSolutionBtn);
 }
 
 export function findCheckButtonsSmart(el: Element, solBtn: HTMLElement | null): HTMLElement[] {
@@ -89,44 +96,23 @@ export function findCheckButtonsSmart(el: Element, solBtn: HTMLElement | null): 
 
   for (const s of scopes) {
     try {
-      const btns = Array.from(s.querySelectorAll("button, input[type='button'], a")).filter(isCheckBtn);
+      const btns = Array.from(s.querySelectorAll(BTN_SELECTOR)).filter(isCheckBtn);
       if (btns.length) return btns as HTMLElement[];
-    } catch (e) {}
+    } catch (e) {} // scope may be detached; try the next one
   }
 
   try {
     const rootEl = root as Document | ShadowRoot;
     const all = rootEl.querySelectorAll
-      ? Array.from(rootEl.querySelectorAll("button, input[type='button'], a")).filter(isCheckBtn)
+      ? Array.from(rootEl.querySelectorAll(BTN_SELECTOR)).filter(isCheckBtn)
       : [];
     return all.slice(0, 8) as HTMLElement[];
-  } catch (e) {}
+  } catch (e) {} // root may be inaccessible; no check buttons to hook
   return [];
 }
 
 export function findHintButtonSmart(el: Element): HTMLElement | null {
-  const root = el.getRootNode ? el.getRootNode() : document;
-  const scopes = buildScopeList(el, null);
-
-  for (const s of scopes) {
-    try {
-      const btns = Array.from(s.querySelectorAll("button, input[type='button'], a")).filter(isHintBtn);
-      if (btns.length) return btns[btns.length - 1] as HTMLElement;
-    } catch (e) {}
-  }
-
-  try {
-    const rootEl = root as Document | ShadowRoot;
-    const btns = rootEl.querySelectorAll
-      ? Array.from(rootEl.querySelectorAll("button, input[type='button'], a")).filter(isHintBtn)
-      : [];
-    for (let i = btns.length - 1; i >= 0; i--) {
-      const b = btns[i] as HTMLElement;
-      if (b && b.getClientRects && b.getClientRects().length) return b;
-    }
-    return (btns[btns.length - 1] as HTMLElement) || null;
-  } catch (e) {}
-  return null;
+  return findButtonSmart(el, isHintBtn);
 }
 
 export function getControlHost(el: Element, solBtn: HTMLElement | null): Element {
@@ -140,7 +126,7 @@ export function cleanupUiInHost(host: Element, uiScope?: string): void {
   const sel = uiScope
     ? `[data-sol-timer-ui='${uiScope}']`
     : "[data-sol-timer-ui]";
-  host.querySelectorAll(sel).forEach(n => { try { n.remove(); } catch (e) {} });
+  host.querySelectorAll(sel).forEach(n => { try { n.remove(); } catch (e) {} }); // already detached is fine
 }
 
 export function hideCheckButtons(btns: HTMLElement[]): void {

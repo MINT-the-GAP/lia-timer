@@ -73,12 +73,17 @@ function armOnCheck({ el, timerBtn, host, ms, showBadge, makeBadge, label }: Arm
     ds(checks[0])[DataKey.Hooked] = "1";
     checks[0].addEventListener("click", startNow, { once: true, passive: true });
   } else {
+    // Host can be long-lived, so detach once the timer starts.
+    const ac = new AbortController();
     host.addEventListener("click", (ev: Event) => {
       const t = (ev as MouseEvent).target as Element;
       if (!t || !t.closest) return;
       const b = t.closest("button, input[type='button'], a");
-      if (b && isCheckBtn(b)) startNow();
-    }, { capture: true, passive: true });
+      if (b && isCheckBtn(b)) {
+        startNow();
+        ac.abort();
+      }
+    }, { capture: true, passive: true, signal: ac.signal });
   }
 }
 

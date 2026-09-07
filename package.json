@@ -1,6 +1,6 @@
 {
   "name": "lia-timer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "LiaScript plugin — reveal solution button after a configurable timer",
   "main": "dist/index.js",
   "scripts": {

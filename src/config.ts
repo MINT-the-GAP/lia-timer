@@ -14,7 +14,13 @@ export interface PluginState {
   items: Map<string, TimerItem>;
   ticker: ReturnType<typeof setInterval> | null;
   observedRoots: WeakSet<Node>;
-  observers: MutationObserver[];
+  observers: ObservedRoot[];
+  rescan: number | null;
+}
+
+export interface ObservedRoot {
+  root: Node;
+  mo: MutationObserver;
 }
 
 export const DataKey = {
@@ -32,7 +38,6 @@ export function ds(el: HTMLElement): Record<string, string | undefined> {
   return el.dataset as unknown as Record<string, string | undefined>;
 }
 
-export const GUARD = "__LIA_SOLUTION_TIMER_V0_0_1__";
 export const STYLE_ID = "__lia_solution_timer_css_v0_0_1__";
 export const CSS = `
 .lia-sol-timer-badge{
@@ -48,8 +53,17 @@ export const CSS = `
 .lia-sol-timer-startbtn{ margin-right:.6rem; }
 `;
 
+export interface PluginWindow extends Window {
+  __LIA_SOLUTION_TIMER_V0_0_1__?: boolean;
+  __liaSolTimerV001?: PluginState;
+}
+
+export function pluginWindow(): PluginWindow {
+  return window as PluginWindow;
+}
+
 export function getState(): PluginState {
-  const WIN = window as any;
+  const WIN = pluginWindow();
   return (
     WIN.__liaSolTimerV001 ||
     (WIN.__liaSolTimerV001 = {
@@ -57,6 +71,7 @@ export function getState(): PluginState {
       ticker: null,
       observedRoots: new WeakSet(),
       observers: [],
+      rescan: null,
     })
   );
 }

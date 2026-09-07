@@ -13,7 +13,6 @@ const $dba5cd6913742fdd$export$eeaa1397af760ecc = {
 function $dba5cd6913742fdd$export$6c6581d59e81d1b9(el) {
     return el.dataset;
 }
-const $dba5cd6913742fdd$export$f237bebc119028c = "__LIA_SOLUTION_TIMER_V0_0_1__";
 const $dba5cd6913742fdd$export$13bec68de17cb8b1 = "__lia_solution_timer_css_v0_0_1__";
 const $dba5cd6913742fdd$export$c4ffa16951855e28 = `
 .lia-sol-timer-badge{
@@ -28,13 +27,17 @@ const $dba5cd6913742fdd$export$c4ffa16951855e28 = `
 }
 .lia-sol-timer-startbtn{ margin-right:.6rem; }
 `;
+function $dba5cd6913742fdd$export$e6a32662458afd37() {
+    return window;
+}
 function $dba5cd6913742fdd$export$50fdfeece43146fd() {
-    const WIN = window;
+    const WIN = $dba5cd6913742fdd$export$e6a32662458afd37();
     return WIN.__liaSolTimerV001 || (WIN.__liaSolTimerV001 = {
         items: new Map(),
         ticker: null,
         observedRoots: new WeakSet(),
-        observers: []
+        observers: [],
+        rescan: null
     });
 }
 
@@ -64,12 +67,6 @@ function $5e471daa26bff96a$export$8d1e137bafb4fdd5(raw, def = true) {
         "y"
     ].includes(s)) return true;
     return def;
-}
-function $5e471daa26bff96a$export$5d0c4199026f0e1d(el) {
-    const v = (el.getAttribute("data-solution-timer-start") || "").trim().toLowerCase();
-    if (/^(onclick|click|manual|startbutton|start-button|start_button)$/.test(v)) return "onclick";
-    if (/^(oncheck|check|aftercheck|after-check|after_check)$/.test(v)) return "oncheck";
-    return "immediate";
 }
 function $5e471daa26bff96a$export$9d770012815ccd9(el, attrName) {
     const v = (el.getAttribute(attrName) || "").trim().toLowerCase();
@@ -129,6 +126,7 @@ function $5e471daa26bff96a$export$7804ef7b40a0b2e(ms) {
 
 // DOM inspection, button discovery, host resolution, and check-button visibility.
 
+const $2f96dbadf81a4e19$var$BTN_SELECTOR = "button, input[type='button'], a";
 function $2f96dbadf81a4e19$export$a83e063a54f70454(el) {
     return (el.textContent || el.value || el.getAttribute("aria-label") || el.getAttribute("title") || "").trim().toLowerCase();
 }
@@ -168,56 +166,45 @@ function $2f96dbadf81a4e19$var$buildScopeList(walkFrom, anchor) {
     }
     return scopes;
 }
-function $2f96dbadf81a4e19$export$ac26612a3a9a3d0a(el) {
+// Nearest matching button by scope, else the last visible one anywhere in the root.
+function $2f96dbadf81a4e19$var$findButtonSmart(el, match) {
     const root = el.getRootNode ? el.getRootNode() : document;
     const scopes = $2f96dbadf81a4e19$var$buildScopeList(el, null);
     for (const s of scopes)try {
-        const btns = Array.from(s.querySelectorAll("button, input[type='button'], a")).filter($2f96dbadf81a4e19$export$f7f65fff92c3f714);
+        const btns = Array.from(s.querySelectorAll($2f96dbadf81a4e19$var$BTN_SELECTOR)).filter(match);
         if (btns.length) return btns[btns.length - 1];
-    } catch (e) {}
+    } catch (e) {} // scope may be detached; try the next one
     try {
         const rootEl = root;
-        const btns = rootEl.querySelectorAll ? Array.from(rootEl.querySelectorAll("button, input[type='button'], a")).filter($2f96dbadf81a4e19$export$f7f65fff92c3f714) : [];
+        const btns = rootEl.querySelectorAll ? Array.from(rootEl.querySelectorAll($2f96dbadf81a4e19$var$BTN_SELECTOR)).filter(match) : [];
         for(let i = btns.length - 1; i >= 0; i--){
             const b = btns[i];
             if (b && b.getClientRects && b.getClientRects().length) return b;
         }
         return btns[btns.length - 1] || null;
-    } catch (e) {}
+    } catch (e) {} // root may be inaccessible; caller treats null as "not found yet"
     return null;
+}
+function $2f96dbadf81a4e19$export$ac26612a3a9a3d0a(el) {
+    return $2f96dbadf81a4e19$var$findButtonSmart(el, $2f96dbadf81a4e19$export$f7f65fff92c3f714);
 }
 function $2f96dbadf81a4e19$export$1ff37ec694e634cb(el, solBtn) {
     const root = el.getRootNode ? el.getRootNode() : document;
     const walkFrom = solBtn ?? el;
     const scopes = $2f96dbadf81a4e19$var$buildScopeList(walkFrom, solBtn?.parentElement ?? null);
     for (const s of scopes)try {
-        const btns = Array.from(s.querySelectorAll("button, input[type='button'], a")).filter($2f96dbadf81a4e19$export$6ce148ac6aa28105);
+        const btns = Array.from(s.querySelectorAll($2f96dbadf81a4e19$var$BTN_SELECTOR)).filter($2f96dbadf81a4e19$export$6ce148ac6aa28105);
         if (btns.length) return btns;
-    } catch (e) {}
+    } catch (e) {} // scope may be detached; try the next one
     try {
         const rootEl = root;
-        const all = rootEl.querySelectorAll ? Array.from(rootEl.querySelectorAll("button, input[type='button'], a")).filter($2f96dbadf81a4e19$export$6ce148ac6aa28105) : [];
+        const all = rootEl.querySelectorAll ? Array.from(rootEl.querySelectorAll($2f96dbadf81a4e19$var$BTN_SELECTOR)).filter($2f96dbadf81a4e19$export$6ce148ac6aa28105) : [];
         return all.slice(0, 8);
-    } catch (e) {}
+    } catch (e) {} // root may be inaccessible; no check buttons to hook
     return [];
 }
 function $2f96dbadf81a4e19$export$d39aea4870896ca8(el) {
-    const root = el.getRootNode ? el.getRootNode() : document;
-    const scopes = $2f96dbadf81a4e19$var$buildScopeList(el, null);
-    for (const s of scopes)try {
-        const btns = Array.from(s.querySelectorAll("button, input[type='button'], a")).filter($2f96dbadf81a4e19$export$c7b32188fc98016c);
-        if (btns.length) return btns[btns.length - 1];
-    } catch (e) {}
-    try {
-        const rootEl = root;
-        const btns = rootEl.querySelectorAll ? Array.from(rootEl.querySelectorAll("button, input[type='button'], a")).filter($2f96dbadf81a4e19$export$c7b32188fc98016c) : [];
-        for(let i = btns.length - 1; i >= 0; i--){
-            const b = btns[i];
-            if (b && b.getClientRects && b.getClientRects().length) return b;
-        }
-        return btns[btns.length - 1] || null;
-    } catch (e) {}
-    return null;
+    return $2f96dbadf81a4e19$var$findButtonSmart(el, $2f96dbadf81a4e19$export$c7b32188fc98016c);
 }
 function $2f96dbadf81a4e19$export$d677d1715dffa34a(el, solBtn) {
     if (solBtn && solBtn.parentElement) return solBtn.parentElement;
@@ -231,7 +218,7 @@ function $2f96dbadf81a4e19$export$2184e5bae6ce039b(host, uiScope) {
         try {
             n.remove();
         } catch (e) {}
-    });
+    }); // already detached is fine
 }
 function $2f96dbadf81a4e19$export$94ddb935abe0ba38(btns) {
     for (const b of btns){
@@ -326,15 +313,23 @@ function $5cd4c2fb7948d554$var$armOnCheck({ el: el, timerBtn: timerBtn, host: ho
             once: true,
             passive: true
         });
-    } else host.addEventListener("click", (ev)=>{
-        const t = ev.target;
-        if (!t || !t.closest) return;
-        const b = t.closest("button, input[type='button'], a");
-        if (b && (0, $2f96dbadf81a4e19$export$6ce148ac6aa28105)(b)) startNow();
-    }, {
-        capture: true,
-        passive: true
-    });
+    } else {
+        // Host can be long-lived, so detach once the timer starts.
+        const ac = new AbortController();
+        host.addEventListener("click", (ev)=>{
+            const t = ev.target;
+            if (!t || !t.closest) return;
+            const b = t.closest("button, input[type='button'], a");
+            if (b && (0, $2f96dbadf81a4e19$export$6ce148ac6aa28105)(b)) {
+                startNow();
+                ac.abort();
+            }
+        }, {
+            capture: true,
+            passive: true,
+            signal: ac.signal
+        });
+    }
 }
 function $5cd4c2fb7948d554$var$armOnClick({ el: el, timerBtn: timerBtn, host: host, doc: doc, ms: ms, showBadge: showBadge, makeBadge: makeBadge, startLabel: startLabel, label: label, hideChecksUntilStart: hideChecksUntilStart, uiScope: uiScope }) {
     if (hideChecksUntilStart) (0, $2f96dbadf81a4e19$export$94ddb935abe0ba38)((0, $2f96dbadf81a4e19$export$1ff37ec694e634cb)(el, timerBtn));
@@ -470,7 +465,7 @@ function $42ee8f97cb5987f8$var$injectStyleIntoRoot(root) {
             st.textContent = (0, $dba5cd6913742fdd$export$c4ffa16951855e28);
             sr.appendChild(st);
         }
-    } catch (e) {}
+    } catch (e) {} // closed/cross-origin root: styling it is optional
 }
 function $42ee8f97cb5987f8$var$getShadowRoots(root) {
     const roots = [];
@@ -483,8 +478,27 @@ function $42ee8f97cb5987f8$var$getShadowRoots(root) {
             if (node.shadowRoot) roots.push(node.shadowRoot);
             node = walker.nextNode();
         }
-    } catch (e) {}
+    } catch (e) {} // walk failed: fall back to whatever roots we already collected
     return roots;
+}
+// scanAll() mutates the DOM, which re-fires the observers that called it.
+// Coalesce into one rescan per frame so a burst of mutations costs one pass.
+function $42ee8f97cb5987f8$var$requestRescan() {
+    const STATE = (0, $dba5cd6913742fdd$export$50fdfeece43146fd)();
+    if (STATE.rescan !== null) return;
+    STATE.rescan = window.setTimeout(()=>{
+        STATE.rescan = null;
+        $42ee8f97cb5987f8$export$5e337cddb229c47e();
+    }, 0);
+}
+// Drops observers whose root is gone, so they don't accumulate across a session.
+function $42ee8f97cb5987f8$var$pruneObservers() {
+    const STATE = (0, $dba5cd6913742fdd$export$50fdfeece43146fd)();
+    STATE.observers = STATE.observers.filter(({ root: root, mo: mo })=>{
+        const alive = root.nodeType === 9 || (root.nodeType === 11 ? root.host?.isConnected : root.isConnected);
+        if (!alive) mo.disconnect();
+        return alive;
+    });
 }
 function $42ee8f97cb5987f8$var$observeRoot(root) {
     const STATE = (0, $dba5cd6913742fdd$export$50fdfeece43146fd)();
@@ -493,16 +507,20 @@ function $42ee8f97cb5987f8$var$observeRoot(root) {
     $42ee8f97cb5987f8$var$injectStyleIntoRoot(root);
     try {
         const mo = new MutationObserver(()=>{
-            $42ee8f97cb5987f8$export$5e337cddb229c47e();
+            $42ee8f97cb5987f8$var$requestRescan();
         });
         mo.observe(root, {
             childList: true,
             subtree: true
         });
-        STATE.observers.push(mo);
-    } catch (e) {}
+        STATE.observers.push({
+            root: root,
+            mo: mo
+        });
+    } catch (e) {} // unobservable root: retryUntilStable still covers it
 }
 function $42ee8f97cb5987f8$export$5e337cddb229c47e() {
+    $42ee8f97cb5987f8$var$pruneObservers();
     const roots = [
         document,
         ...$42ee8f97cb5987f8$var$getShadowRoots(document)
@@ -514,7 +532,7 @@ function $42ee8f97cb5987f8$export$5e337cddb229c47e() {
         try {
             const rootEl = r;
             els = rootEl.querySelectorAll ? Array.from(rootEl.querySelectorAll($42ee8f97cb5987f8$var$TIMER_SELECTOR)) : [];
-        } catch (e) {}
+        } catch (e) {} // unqueryable root: skip it this pass
         for (const el of els)if ((0, $5cd4c2fb7948d554$export$9ea6af4cf3708cf7)(el)) armed++;
     }
     return armed;
@@ -541,9 +559,9 @@ function $42ee8f97cb5987f8$export$2cd8252107eb640b() {
 }
 
 
-const $882b6d93070905b3$var$WIN = window;
-if (!$882b6d93070905b3$var$WIN[0, $dba5cd6913742fdd$export$f237bebc119028c]) {
-    $882b6d93070905b3$var$WIN[0, $dba5cd6913742fdd$export$f237bebc119028c] = true;
+const $882b6d93070905b3$var$WIN = (0, $dba5cd6913742fdd$export$e6a32662458afd37)();
+if (!$882b6d93070905b3$var$WIN.__LIA_SOLUTION_TIMER_V0_0_1__) {
+    $882b6d93070905b3$var$WIN.__LIA_SOLUTION_TIMER_V0_0_1__ = true;
     (0, $dba5cd6913742fdd$export$50fdfeece43146fd)(); // ensure state singleton is initialised
     (0, $42ee8f97cb5987f8$export$2cd8252107eb640b)();
 }
